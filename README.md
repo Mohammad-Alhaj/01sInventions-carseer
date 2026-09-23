@@ -56,30 +56,12 @@ APIs used:
 
 ```bash
 docker build -t inventions-carseer .
-docker run --rm -p 8080:8080 inventions-carseer
+docker run -d \
+  --name carseer \
+  --restart unless-stopped \
+  -p 8080:8080 \
+  nventions-carseer
 ```
 
 Open `http://localhost:8080`.
 
-The container serves plain HTTP on port `8080` as a non-root user. TLS is expected to be
-terminated in front of it (ALB, CloudFront or an nginx you put on the box), so
-`EnableHttpsRedirection=false` is baked into the image; the app trusts `X-Forwarded-Proto`
-and `X-Forwarded-For`. Config overrides work as environment variables, e.g.
-`-e NhtsaApi__TimeoutSeconds=30`.
-
-## Deploy on EC2
-
-```bash
-# Amazon Linux 2023, once per instance
-sudo dnf install -y docker git
-sudo systemctl enable --now docker
-sudo usermod -aG docker ec2-user   # log out and back in
-
-# in the repo
-docker build -t inventions-carseer .
-docker run -d --name carseer --restart unless-stopped -p 80:8080 inventions-carseer
-```
-
-Open port 80 (and 443 if you terminate TLS on the instance) in the instance's security group.
-To update: `git pull && docker build -t inventions-carseer . && docker rm -f carseer` and run
-the `docker run` line again.
