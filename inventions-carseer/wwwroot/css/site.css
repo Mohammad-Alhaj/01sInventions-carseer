@@ -29,3 +29,30 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+/* Searchable dropdowns (Tom Select) */
+.ts-dropdown .ts-dropdown-content {
+  max-height: 50vh;
+}
+
+.input-validation-error + .ts-wrapper .ts-control {
+  border-color: var(--bs-form-invalid-border-color, #dc3545);
+}
+
+@media (max-width: 767.98px) {
+  /* 16px prevents iOS from zooming in when the search input is focused */
+  .ts-wrapper .ts-control, .ts-wrapper .ts-control input, .ts-dropdown {
+    font-size: 16px;
+  }
+}
+
+/* Full-page loader shown while search results load */
+.search-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.7);
+}

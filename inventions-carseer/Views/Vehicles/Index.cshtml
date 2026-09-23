@@ -9,7 +9,7 @@
 
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <form asp-action="Search" method="get" novalidate>
+        <form asp-action="Search" method="get" id="searchForm" novalidate>
             <div class="row g-3 align-items-end">
                 <div class="col-md-5">
                     <label asp-for="MakeId" class="form-label"></label>
@@ -38,11 +38,19 @@
                 </div>
 
                 <div class="col-md-2 d-grid">
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="submit" id="searchButton" class="btn btn-primary">
+                        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true" hidden></span>
+                        <span class="btn-label">Search</span>
+                    </button>
                 </div>
             </div>
         </form>
     </div>
+</div>
+
+<div id="searchLoader" class="search-loader" hidden>
+    <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+    <div class="mt-2">Loading models...</div>
 </div>
 
 @if (Model.ErrorMessage is not null)
